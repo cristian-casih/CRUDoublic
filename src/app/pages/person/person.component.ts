@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { PersonModel } from '../../models/person.model';
+import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { Observable } from 'rxjs';
+
+import { PersonModel } from '../../models/person.model';
 import { PersonsService } from '../../services/persons.service';
 
 import Swal from 'sweetalert2';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-person',
@@ -15,11 +17,23 @@ export class PersonComponent implements OnInit {
 
   person: PersonModel = new PersonModel();
 
-  constructor(private personServices: PersonsService) { }
+  constructor(private personServices: PersonsService,
+              private route:ActivatedRoute) { }
 
   ngOnInit() {
-  }
 
+    const id= this.route.snapshot.paramMap.get('id');
+    if(id!=='new'){
+
+      this.personServices.getPerson(id)
+        .subscribe((resp:PersonModel)=>{
+          this.person=resp 
+          this.person._id=id 
+                            
+        });
+    }
+    
+  }
   save(form: NgForm) {
 
     if (form.invalid) {
@@ -34,9 +48,8 @@ export class PersonComponent implements OnInit {
       allowOutsideClick: false
     });
     Swal.showLoading();
-
     let petition: Observable<any>;
-
+    
     if (this.person._id) {
       petition = this.personServices.updatePerson(this.person)
     } else {
@@ -53,3 +66,4 @@ export class PersonComponent implements OnInit {
   }
 
 }
+
