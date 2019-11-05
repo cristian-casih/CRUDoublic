@@ -17,7 +17,7 @@ export class PersonsService {
     return this.http.post(`${this.url}/person`, person)
       .pipe(
         map((resp: any) => {
-          person.id = resp.name;
+          person._id = resp._id;
           return person
         })
       );
@@ -26,8 +26,8 @@ export class PersonsService {
     const personTemp={
       ...person
     };
-    delete personTemp.id;
+    delete personTemp._id;
 
-    return this.http.put(`${this.url}/person/${person.id}`, personTemp)
+    return this.http.put(`${this.url}/person/${person._id}`, personTemp)
   }
 }

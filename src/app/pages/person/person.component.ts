@@ -23,7 +23,7 @@ export class PersonComponent implements OnInit {
       console.log('Form invalid');
       return;
     }
-    if(this.person.id){
+    if(this.person._id){
       this.personServices.updatePerson(this.person)
         .subscribe(resp=>{
           console.log(resp);

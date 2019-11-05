@@ -1,6 +1,6 @@
 export class PersonModel {
     
-    id:String;
+    _id:String;
     name:String;
     lastname:String;
     dateofbirth:Date;
