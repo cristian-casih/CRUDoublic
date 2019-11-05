@@ -3,8 +3,7 @@
 
 <div class="row">
     <div class="col text-right">
-        <button routerLink="/person/add"
-                class="btn btn-primary">
+        <button routerLink="/person/add" class="btn btn-primary">
             <i class="fa fa-plus"></i>
             Add
         </button>
@@ -24,14 +23,14 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>Man</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
+        <tr *ngFor="let p of persons; let i=index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{p.name}}</td>
+            <td>{{p.lastname}}</td>
+            <td>{{p.dateofbirth}}</td>
+            <td>{{p.sex}}</td>
+            <td>{{p.email}}</td>
+            <td>{{p.created}}</td>
         </tr>
     </tbody>
 </table>
