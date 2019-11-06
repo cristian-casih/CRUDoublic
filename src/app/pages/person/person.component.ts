@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -15,10 +15,11 @@ import Swal from 'sweetalert2';
 })
 export class PersonComponent implements OnInit {
 
-  person: PersonModel = new PersonModel();
+  person: PersonModel=new PersonModel();
 
   constructor(private personServices: PersonsService,
-              private route:ActivatedRoute) { }
+              private route:ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
 
@@ -26,10 +27,10 @@ export class PersonComponent implements OnInit {
     if(id!=='new'){
 
       this.personServices.getPerson(id)
-        .subscribe((resp:PersonModel)=>{
-          this.person=resp 
-          this.person._id=id 
-                            
+        .subscribe((resp)=>{
+          this.person=resp.person
+          console.log( "ss",this.person);
+          //this.person._id=id                
         });
     }
     
@@ -40,7 +41,6 @@ export class PersonComponent implements OnInit {
       console.log('Form invalid');
       return;
     }
-
     Swal.fire({
       icon: 'info',
       title: 'Wait...',
@@ -48,9 +48,10 @@ export class PersonComponent implements OnInit {
       allowOutsideClick: false
     });
     Swal.showLoading();
+
     let petition: Observable<any>;
     
-    if (this.person._id) {
+    if (this.person._id) {     
       petition = this.personServices.updatePerson(this.person)
     } else {
       petition = this.personServices.createPerson(this.person)
@@ -62,7 +63,12 @@ export class PersonComponent implements OnInit {
       title: this.person.name,
       text: 'Person updated successfully',
     });
-  });
+    if(resp){
+      this.router.navigateByUrl('/persons');
+    }
+    }
+  );
+  
   }
 
 }

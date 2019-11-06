@@ -9,36 +9,41 @@ import Swal from 'sweetalert2';
   styleUrls: ['./persons.component.css']
 })
 export class PersonsComponent implements OnInit {
-  
- persons: PersonModel[] = [];
-  loading=false;
+
+  persons: PersonModel[] = [];
+  loading = false;
 
   constructor(private personsService: PersonsService) { }
 
   ngOnInit() {
+    this.getPersons();
+  }
 
-    this.loading=true 
+  getPersons(){
+    this.loading = true
     this.personsService.getPersons()
       .subscribe(resp => {
-       console.log(resp);
-       //video youtube  
-      this.persons = resp.data;
-      this.loading=false; 
-    });
-    }
-
+        this.persons = resp.person;
+        this.loading = false;
+      },error =>{
+        console.log(JSON.stringify(error));
+      });
+  }
+  
   deletePerson(person: PersonModel, i: number) {
-    console.log(person[i],"person.name")
+    //console.log(person, "person.name")
     Swal.fire({
       icon: 'question',
       title: 'Are you sure?',
-      text: `Are you sure you want to delete ${person[i].name}`,
+      text: `Are you sure you want to delete ${person.name}`,
       showConfirmButton: true,
       showCancelButton: true
     }).then(resp => {
       if (resp.value) {
-        this.persons.slice(i, 1);
-        this.personsService.deletePerson(person[i]._id).subscribe();
+        this.personsService.deletePerson(person._id).subscribe(resp=>{
+          this.persons.slice(i, 1);
+          this.getPersons();
+        });
       }
     })
 

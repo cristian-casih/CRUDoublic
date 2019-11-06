@@ -26,20 +26,20 @@
     </thead>
     <tbody>
        <!-- <tr *ngFor="let person of personsService.persons; let i=index">  -->
-          <tr *ngFor="let person of persons; let i=index">  
+          <tr *ngFor="let p of persons; let i=index">  
             <th scope="row">{{ i + 1}}</th>
 
-            <td>{{person.data.name}}</td>
-            <td>{{person.lastname}}</td>
-            <td>{{person.dateofbirth}}</td>
-            <td>{{person.sex}}</td>
-            <td>{{person.email}}</td>
-            <td>{{person.created}}</td>
+            <td>{{p.name}}</td>
+            <td>{{p.lastname}}</td>
+            <td>{{p.dateofbirth}}</td>
+            <td>{{p.sex}}</td>
+            <td>{{p.email}}</td>
+            <td>{{p.created}}</td>
             <td>
-                <button class="btn btn-info mr-1" [routerLink]="[ '/person', person[i]._id ]">
+                <button class="btn btn-info mr-1" [routerLink]="[ '/person', p._id ]">
                     <i class="fas fa-edit"></i>
                 </button>
-                <button class="btn btn-danger" (click)="deletePerson(person, i)">
+                <button class="btn btn-danger" (click)="deletePerson(p, i)">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </td>
