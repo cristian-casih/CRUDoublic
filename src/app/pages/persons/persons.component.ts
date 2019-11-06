@@ -9,21 +9,21 @@ import Swal from 'sweetalert2';
   styleUrls: ['./persons.component.css']
 })
 export class PersonsComponent implements OnInit {
-
-  persons: PersonModel[] = [];
+  
+ persons: PersonModel[] = [];
   loading=false;
 
   constructor(private personsService: PersonsService) { }
 
   ngOnInit() {
 
-    this.loading=true
-    console.log(this.persons.length,"lengthhh");
-    
+    this.loading=true 
     this.personsService.getPersons()
       .subscribe(resp => {
-      this.persons = resp;
-      this.loading=false;
+       console.log(resp);
+       //video youtube  
+      this.persons = resp.data;
+      this.loading=false; 
     });
     }
 

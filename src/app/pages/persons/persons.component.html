@@ -25,16 +25,16 @@
         </tr>
     </thead>
     <tbody>
-       <!--  <tr *ngFor="let person of personsService.persons; let i=index"> -->
-         <tr *ngFor="let person of persons; let i=index"> 
+       <!-- <tr *ngFor="let person of personsService.persons; let i=index">  -->
+          <tr *ngFor="let person of persons; let i=index">  
             <th scope="row">{{ i + 1}}</th>
 
-            <td>{{person[i].name}}</td>
-            <td>{{person[i].lastname}}</td>
-            <td>{{person[i].dateofbirth}}</td>
-            <td>{{person[i].sex}}</td>
-            <td>{{person[i].email}}</td>
-            <td>{{person[i].created}}</td>
+            <td>{{person.data.name}}</td>
+            <td>{{person.lastname}}</td>
+            <td>{{person.dateofbirth}}</td>
+            <td>{{person.sex}}</td>
+            <td>{{person.email}}</td>
+            <td>{{person.created}}</td>
             <td>
                 <button class="btn btn-info mr-1" [routerLink]="[ '/person', person[i]._id ]">
                     <i class="fas fa-edit"></i>
