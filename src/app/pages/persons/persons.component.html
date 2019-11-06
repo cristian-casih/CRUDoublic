@@ -3,15 +3,15 @@
 
 <div class="row">
     <div class="col text-right">
-        <button routerLink="/person/add"
-                class="btn btn-primary">
+        <button routerLink="/person/new" class="btn btn-primary">
             <i class="fa fa-plus"></i>
-            Add
+            New
         </button>
     </div>
 
 </div>
-<table class="table mt-3 animated fadeIn faster">
+<table *ngIf="!loading && persons.length > 0" 
+       class="table mt-3 animated fadeIn faster">
     <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
@@ -21,28 +21,41 @@
             <th scope="col">Sex</th>
             <th scope="col">E-mail</th>
             <th scope="col">Created</th>
+            <th scope="col">Tools</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>Man</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
+       <!-- <tr *ngFor="let person of personsService.persons; let i=index">  -->
+          <tr *ngFor="let p of persons; let i=index">  
+            <th scope="row">{{ i + 1}}</th>
+
+            <td>{{p.name}}</td>
+            <td>{{p.lastname}}</td>
+            <td>{{p.dateofbirth}}</td>
+            <td>{{p.sex}}</td>
+            <td>{{p.email}}</td>
+            <td>{{p.created}}</td>
+            <td>
+                <button class="btn btn-info mr-1" [routerLink]="[ '/person', p._id ]">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-danger" (click)="deletePerson(p, i)">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
         </tr>
     </tbody>
 </table>
 
-<div class="alert alert-warning text-center mt-3">
+<div *ngIf="!loading && persons.length === 0" 
+     class="alert alert-warning text-center mt-3 animated fadeIn faster">
     <h4 class="alert-heading">Not data found</h4>
     <p>
         <i class="fas fa-exclamation fa-2x"></i>
         <p>
 </div>
-<div class="alert alert-info text-center mt-3">
+<div *ngIf="loading" 
+     class="alert alert-info text-center mt-3 animated fadeIn faster">
     <h4 class="alert-heading">Loading...</h4>
     <p>
 
